@@ -8,9 +8,9 @@ class LinkUploader
     file_name = 'links.csv'
     zip_file = 'links.zip'
     CSV.open('links.csv', 'wb') do |csv|
-      csv << %w(vol type link)
+      csv << %w(vol type link password)
       DropboxLink.find_each do |dl|
-        csv << [dl.vol, dl.stype, dl.link]
+        csv << [dl.vol, dl.stype, dl.link, dl.password]
       end
     end
 
