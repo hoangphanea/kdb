@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160115070154) do
+ActiveRecord::Schema.define(version: 20160126024230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20160115070154) do
     t.string   "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "stype"
+    t.string   "password"
   end
 
   add_index "dropbox_links", ["vol"], name: "index_dropbox_links_on_vol", using: :btree
@@ -55,12 +57,14 @@ ActiveRecord::Schema.define(version: 20160115070154) do
     t.boolean  "check",       default: false
     t.string   "temp"
     t.text     "utf8_lyric"
+    t.string   "stype",       default: ""
   end
 
   add_index "songs", ["name"], name: "index_songs_on_name", using: :btree
   add_index "songs", ["short_lyric"], name: "index_songs_on_short_lyric", using: :btree
   add_index "songs", ["singer"], name: "index_songs_on_singer", using: :btree
   add_index "songs", ["song_id"], name: "index_songs_on_song_id", using: :btree
+  add_index "songs", ["stype"], name: "index_songs_on_stype", using: :btree
   add_index "songs", ["vol"], name: "index_songs_on_vol", using: :btree
 
 end
