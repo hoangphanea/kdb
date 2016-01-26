@@ -1,1 +1,3 @@
 db_key: key
+encrypt_key: 1
+link_password: link_pass

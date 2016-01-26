@@ -18,6 +18,8 @@ gem "dropbox-sdk"
 gem 'capybara'
 gem 'selenium-webdriver'
 gem 'pg_search'
+gem 'pdf-reader'
+gem 'rubyzip'
 
 group :development, :test do
   gem 'byebug'
