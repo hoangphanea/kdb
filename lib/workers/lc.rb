@@ -5,12 +5,12 @@ class Lc
 
   def perform(id)
     song = Song.find(id)
-    # search = Nokogiri::HTML(open("http://lyric.tkaraoke.com/s.tim?q=#{URI.encode(song.short_lyric.mb_chars.downcase.to_s.gsub(/[\.\? !,-:]+/, ' ').strip)}&t=4"))
-    # css = search.css('.div-result-item .h4-title-song a')
-    # href = css[0].attributes['href'].value
-    song_page = Nokogiri::HTML(open("http://www.masobaihatkaraoke.com/maso/#{song.song_id}"))
-    ld = song_page.css('.SongLyric span')[0]
-    lyric = ld.to_s.gsub(/[,\.]?(<br>|\n)+/, ' ').gsub(/(\n|\r)+/, ' ').gsub(/\t+/, ' ')
+    search = Nokogiri::HTML(open("http://mp3.zing.vn/tim-kiem/bai-hat.html?q=#{URI.encode(song.name.gsub('(remix)', '').strip)}"))
+    css = search.css('.page-search .item-song .title-song a')
+    href = css[0].attributes['href'].value
+    song_page = Nokogiri::HTML(open(href))
+    ld = song_page.css('.fn-lyrics p.fn-content')[2]
+    lyric = ld.to_s.gsub(/[,\.]?(<br>|\n)+/, '. ').gsub(/(\n|\r)+/, ' ').gsub(/\t+/, ' ')
     song.update(lyric: Nokogiri.HTML(lyric).text.mb_chars.upcase.to_s.strip)
   rescue Exception => e
     p 'error'
