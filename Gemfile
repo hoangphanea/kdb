@@ -20,6 +20,7 @@ gem 'selenium-webdriver'
 gem 'pg_search'
 gem 'pdf-reader'
 gem 'rubyzip'
+gem 'textacular'
 
 group :development, :test do
   gem 'byebug'

@@ -8,7 +8,7 @@ class Slc
     return if Page.exists?(page_num: page)
     all = nil
     loop do
-      break if all = Nokogiri::HTML(open("http://www.masokaraoke.net/music-core//?page=#{page}"))
+      break if all = Nokogiri::HTML(open("http://www.masokaraoke.net/list-karaoke//?page=#{page}"))
     end
     if content = all.try(:css, '#resultSong').try(:first)
       songs = []
@@ -22,7 +22,7 @@ class Slc
             name = song.css('.songName').text
             singer = song.css('.author').text
             short_lyric = song.css('.SongLyric').text.gsub(/[,\.]?(<br>|\n)+/, ' ').gsub(/(\n|\r)+/, ' ').gsub(/\t+/, ' ').mb_chars.upcase.to_s.strip
-            songs << Song.new(vol: vol, song_id: id, name: name, singer: singer, short_lyric: short_lyric, stype: 'Music Core')
+            songs << Song.new(vol: vol, song_id: id, name: name, singer: singer, short_lyric: short_lyric, stype: 'Arirang 5')
           end
         end
       end

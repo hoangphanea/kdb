@@ -18,7 +18,7 @@ class Msk
         vol = ids[1].to_i
         name = song.css('.songName').text
         singer = song.css('.author').text
-        songs << Song.new(vol: vol, song_id: id, name: name, singer: singer)
+        songs << Song.new(vol: vol, song_id: id, name: name, singer: singer, stype: 'Arirang 5')
       end
     end
     Song.import(songs)
