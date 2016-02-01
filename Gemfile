@@ -21,6 +21,7 @@ gem 'pg_search'
 gem 'pdf-reader'
 gem 'rubyzip'
 gem 'textacular'
+gem 'amatch'
 
 group :development, :test do
   gem 'byebug'
