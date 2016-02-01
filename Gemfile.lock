@@ -41,6 +41,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     afm (0.2.2)
+    amatch (0.2.11)
+      tins (~> 0.3)
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -167,6 +169,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    tins (0.13.2)
     ttfunk (1.4.0)
     turbolinks (2.5.3)
       coffee-rails
@@ -190,6 +193,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-import
   addressable
+  amatch
   byebug
   capybara
   coffee-rails (~> 4.1.0)
