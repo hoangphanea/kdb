@@ -4,7 +4,7 @@ class Csa
   include Sidekiq::Worker
 
   def perform
-    Song.where(song_id: %w(62100 66374 61188)).each do |id|
+    Song.where(stype: 'Music Core').where(vol: 6789, lyric: '', check: false).pluck(:id).each do |id|
       Csaw.perform_async(id)
     end
   end
