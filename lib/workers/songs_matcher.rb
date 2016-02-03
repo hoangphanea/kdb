@@ -3,11 +3,14 @@ require 'open-uri'
 class SongsMatcher
   include Sidekiq::Worker
 
-  def perform(singer, link)
+  def perform(singer_id)
+    singer = Singer.find(singer_id)
     page = 0
+    Record.where(singer: singer).delete_all
+    records = []
     while true
       page += 1
-      search = Nokogiri::HTML(open("#{link}/bai-hat?&page=#{page}"))
+      search = Nokogiri::HTML(open("#{singer.link}/bai-hat?&page=#{page}"))
       if (css = search.css('.list-item .fn-song .info-dp .txt-primary a')).present?
         css.each do |song_css|
           begin
@@ -16,10 +19,7 @@ class SongsMatcher
               ["Arirang 5", "California", "Music Core", "Viet KTV"].each do |stype|
                 songs = Song.where('UPPER(name) = ?', song_name).where(stype: stype)
                 if songs.count == 1
-                  song = songs.first
-                  singers = Set.new(song.singer.split(' ; '))
-                  singers << singer
-                  song.update(singer: singers.to_a.join(' ; '))
+                  records << Record.new(song: songs.first, singer: singer, link: song_css.attributes['href'])
                 end
               end
             end
@@ -32,6 +32,7 @@ class SongsMatcher
         break
       end
     end
+    Record.import(records)
   rescue Exception => e
     p 'error'
     p e
