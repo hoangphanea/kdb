@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129093447) do
+ActiveRecord::Schema.define(version: 20160201172643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160129093447) do
     t.string   "temp"
     t.text     "utf8_lyric"
     t.string   "stype",       default: ""
+    t.string   "author"
   end
 
   add_index "songs", ["name"], name: "index_songs_on_name", using: :btree
