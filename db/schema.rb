@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201172643) do
+ActiveRecord::Schema.define(version: 20160203063656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,11 +46,34 @@ ActiveRecord::Schema.define(version: 20160201172643) do
 
   add_index "pg_search_documents", ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
 
+  create_table "records", force: :cascade do |t|
+    t.integer  "singer_id"
+    t.integer  "song_id"
+    t.integer  "hit_count",  default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "link"
+  end
+
+  add_index "records", ["hit_count"], name: "index_records_on_hit_count", using: :btree
+  add_index "records", ["singer_id"], name: "index_records_on_singer_id", using: :btree
+  add_index "records", ["song_id"], name: "index_records_on_song_id", using: :btree
+
+  create_table "singers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "link"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "check",      default: false
+  end
+
+  add_index "singers", ["check"], name: "index_singers_on_check", using: :btree
+  add_index "singers", ["name"], name: "index_singers_on_name", using: :btree
+
   create_table "songs", force: :cascade do |t|
     t.string   "name",        default: ""
     t.string   "song_id",     default: ""
     t.text     "lyric",       default: ""
-    t.string   "singer",      default: ""
     t.integer  "vol",         default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
@@ -64,9 +87,10 @@ ActiveRecord::Schema.define(version: 20160201172643) do
 
   add_index "songs", ["name"], name: "index_songs_on_name", using: :btree
   add_index "songs", ["short_lyric"], name: "index_songs_on_short_lyric", using: :btree
-  add_index "songs", ["singer"], name: "index_songs_on_singer", using: :btree
   add_index "songs", ["song_id"], name: "index_songs_on_song_id", using: :btree
   add_index "songs", ["stype"], name: "index_songs_on_stype", using: :btree
   add_index "songs", ["vol"], name: "index_songs_on_vol", using: :btree
 
+  add_foreign_key "records", "singers", on_delete: :cascade
+  add_foreign_key "records", "songs", on_delete: :cascade
 end
