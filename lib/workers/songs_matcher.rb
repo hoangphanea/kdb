@@ -18,8 +18,8 @@ class SongsMatcher
             if song_name
               ["Arirang 5", "California", "Music Core", "Viet KTV"].each do |stype|
                 songs = Song.where('UPPER(name) = ?', song_name).where(stype: stype)
-                if songs.count == 1
-                  records << Record.new(song: songs.first, singer: singer, link: song_css.attributes['href'])
+                songs.each do |song|
+                  records << Record.new(song: song, singer: singer, link: song_css.attributes['href'])
                 end
               end
             end
