@@ -13,7 +13,7 @@ class DropboxUploader
 
       id_hc_sql = Record.joins(:song).group(:song_id).select('MAX(hit_count)', :song_id).to_sql
 
-      Record.joins(:song).joins(:singer).where('songs.stype = ?', type).where('songs.vol = ?', vol).where("(records.hit_count, records.song_id) IN (#{id_hc_sql})").group('1,2,3,5').pluck('songs.song_id', 'songs.name', 'songs.author', 'array_agg(singers.name)', 'songs.short_lyric').each do |row|
+      Record.joins(:song).joins(:singer).where('songs.stype = ?', type).where('songs.vol = ?', vol).where("(records.hit_count, records.song_id) IN (#{id_hc_sql})").group('1,2,3,5').pluck('songs.song_id', 'songs.name', 'songs.author', 'array_agg(singers.name)', 'songs.lyric').each do |row|
         csv << [row[0], row[1], row[2], row[3].join(', '), row[4]]
       end
 
