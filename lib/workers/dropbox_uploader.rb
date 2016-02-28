@@ -38,8 +38,7 @@ class DropboxUploader
       f.write data.string
     end
     $client.put_file("/#{zip_file}", open(zip_file))
-    response = $session.do_get "/shares/auto/#{$client.format_path('/' + zip_file)}", {"short_url"=>false}
-    result = Dropbox::parse_response(response)
+    result = $client.shares("/#{zip_file}", false)
     DropboxLink.create(vol: vol, stype: type, password: encrypt(password), link: result['url'].gsub('?dl=0', '?dl=1'))
   rescue Exception => e
     p e
